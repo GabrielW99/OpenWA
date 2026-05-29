@@ -81,8 +81,9 @@ RUN mkdir -p ./data/sessions ./data/media && \
 EXPOSE 2785
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-    CMD node -e "require('http').get('http://localhost:2785/api/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))"
+EXPOSE 2886 2785
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD node -e "require('http').get('http://localhost:2886/api/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"
 
 # Start with dumb-init to handle signals properly
 ENTRYPOINT ["dumb-init", "--"]
