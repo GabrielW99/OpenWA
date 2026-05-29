@@ -23,7 +23,7 @@ RUN npm ci
 COPY . .
 
 # Build the application
-RUN npx nest build
+RUN npm run build
 
 # ===== Stage 2: Production =====
 FROM node:22-slim AS production
